@@ -17,11 +17,12 @@ const (
 )
 
 func main() {
-	fmt.Println("hello world")
 	add := flag.Bool("add", false, "add a new todo")
 	complete := flag.Int("complete", 0, "Mark a todo to complete")
 	del := flag.Int("delete", 0, "delete a todo ")
-	list := flag.Bool("list", false, "show the list of todos")
+	list := flag.Bool("la", false, "show the list of todos")
+	due := flag.Bool("ld", false, "show the list of todos that are not completed")
+
 	flag.Parse()
 
 	todos := &todo.Todos{}
@@ -37,21 +38,32 @@ func main() {
 		todos.Add(task)
 		err = todos.Store(todoFile)
 		handleError(err)
+		todos.Print(true)
 	case *complete > 0:
 		err := todos.Complete(*complete)
 		handleError(err)
 		err = todos.Store(todoFile)
 		handleError(err)
+		todos.Print(true)
 	case *del > 0:
 		err := todos.Delete(*del)
 		handleError(err)
 		err = todos.Store(todoFile)
 		handleError(err)
+		todos.Print(true)
 	case *list:
-		todos.Print()
+		todos.Print(true)
+	case *due:
+		todos.Print(false)
 	default:
-		fmt.Fprintln(os.Stdout, "invalid command")
-		os.Exit(1)
+		//fmt.Fprintln(os.Stdout, "invalid command")
+		//os.Exit(1)
+    fmt.Println("-add <text>  -> to add a new task")
+    fmt.Println("-complete <index>  -> to complete a certain task")
+    fmt.Println("-delete <index>  -> to delete a certain task")
+    fmt.Println("-la  -> show every todo")
+    fmt.Println("-la  -> show no completed todos")
+
 	}
 
 }
