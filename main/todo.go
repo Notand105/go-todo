@@ -22,6 +22,7 @@ func main() {
 	del := flag.Int("delete", 0, "delete a todo ")
 	list := flag.Bool("la", false, "show the list of todos")
 	due := flag.Bool("ld", false, "show the list of todos that are not completed")
+  purge := flag.Bool("purge", false, "delete every todo")
 
 	flag.Parse()
 
@@ -55,6 +56,12 @@ func main() {
 		todos.Print(true)
 	case *due:
 		todos.Print(false)
+  case *purge:
+    err := todos.Purge()
+		handleError(err)
+		err = todos.Store(todoFile)
+		handleError(err)
+		todos.Print(true)
 	default:
 		//fmt.Fprintln(os.Stdout, "invalid command")
 		//os.Exit(1)
@@ -63,6 +70,7 @@ func main() {
     fmt.Println("-delete <index>  -> to delete a certain task")
     fmt.Println("-la  -> show every todo")
     fmt.Println("-la  -> show no completed todos")
+    fmt.Println("-purge  -> delete every todo")
 
 	}
 

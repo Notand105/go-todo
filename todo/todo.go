@@ -52,6 +52,11 @@ func (t *Todos) Delete(index int) error {
 	return nil
 }
 
+func (t *Todos) Purge() error {
+	*t = nil
+	return nil
+}
+
 func (t *Todos) Load(filename string) error {
 	file, err := ioutil.ReadFile(filename)
 	if err != nil {
