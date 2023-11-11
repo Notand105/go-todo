@@ -69,7 +69,7 @@ func main() {
     fmt.Println("-complete <index>  -> to complete a certain task")
     fmt.Println("-delete <index>  -> to delete a certain task")
     fmt.Println("-la  -> show every todo")
-    fmt.Println("-la  -> show no completed todos")
+    fmt.Println("-ld  -> show no completed todos")
     fmt.Println("-purge  -> delete every todo")
 
 	}
