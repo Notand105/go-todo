@@ -17,12 +17,13 @@ const (
 )
 
 func main() {
+	//TODO implementar opcion para autoimplementar borrado automatico al completar una tare
 	add := flag.Bool("add", false, "add a new todo")
 	complete := flag.Int("complete", 0, "Mark a todo to complete")
 	del := flag.Int("delete", 0, "delete a todo ")
 	list := flag.Bool("la", false, "show the list of todos")
 	due := flag.Bool("ld", false, "show the list of todos that are not completed")
-  purge := flag.Bool("purge", false, "delete every todo")
+	purge := flag.Bool("purge", false, "delete every todo")
 
 	flag.Parse()
 
@@ -56,8 +57,8 @@ func main() {
 		todos.Print(true)
 	case *due:
 		todos.Print(false)
-  case *purge:
-    err := todos.Purge()
+	case *purge:
+		err := todos.Purge()
 		handleError(err)
 		err = todos.Store(todoFile)
 		handleError(err)
@@ -65,12 +66,12 @@ func main() {
 	default:
 		//fmt.Fprintln(os.Stdout, "invalid command")
 		//os.Exit(1)
-    fmt.Println("-add <text>  -> to add a new task")
-    fmt.Println("-complete <index>  -> to complete a certain task")
-    fmt.Println("-delete <index>  -> to delete a certain task")
-    fmt.Println("-la  -> show every todo")
-    fmt.Println("-ld  -> show no completed todos")
-    fmt.Println("-purge  -> delete every todo")
+		fmt.Println("-add <text>  -> to add a new task")
+		fmt.Println("-complete <index>  -> to complete a certain task")
+		fmt.Println("-delete <index>  -> to delete a certain task")
+		fmt.Println("-la  -> show every todo")
+		fmt.Println("-ld  -> show no completed todos")
+		fmt.Println("-purge  -> delete every todo")
 
 	}
 
