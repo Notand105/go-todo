@@ -24,6 +24,7 @@ func main() {
 	list := flag.Bool("la", false, "show the list of todos")
 	due := flag.Bool("ld", false, "show the list of todos that are not completed")
 	purge := flag.Bool("purge", false, "delete every todo")
+	ad := flag.Bool("ad", false, "auto-delete completed tasks")
 
 	flag.Parse()
 
@@ -63,6 +64,13 @@ func main() {
 		err = todos.Store(todoFile)
 		handleError(err)
 		todos.Print(true)
+	case *ad:
+		err := todos.AutoDelete()
+		handleError(err)
+		err = todos.Store(todoFile)
+		handleError(err)
+		todos.Print(true)
+
 	default:
 		//fmt.Fprintln(os.Stdout, "invalid command")
 		//os.Exit(1)

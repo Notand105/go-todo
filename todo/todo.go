@@ -88,6 +88,19 @@ func (t *Todos) Store(filename string) error {
 	return ioutil.WriteFile(filename, data, 0664)
 }
 
+func (t *Todos) AutoDelete() error {
+	ls := *t
+	if len(ls) <= 0 {
+		return errors.New("empty list")
+	}
+	for i := 0; i < len(ls); i++ {
+		if ls[i].Done {
+			t.Delete(i)
+		}
+	}
+	return nil
+}
+
 func (t *Todos) Print(all bool) {
 	table := simpletable.New()
 	table.Header = &simpletable.Header{
@@ -105,8 +118,8 @@ func (t *Todos) Print(all bool) {
 	for index, item := range *t {
 		index++
 		if all {
-			task := blue(item.Task)
-			done := blue("no")
+			task := gray(item.Task)
+			done := gray("no")
 			if item.Done {
 				task = green(fmt.Sprintf("%s", item.Task))
 				done = green(fmt.Sprintf("yes"))
